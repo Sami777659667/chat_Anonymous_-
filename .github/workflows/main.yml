@@ -1,0 +1,35 @@
+name: Telegram Bot Live Execution
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # يتيح لك تشغيل البوت يدوياً من واجهة جيت هاب
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    # نضع حد أقصى للتشغيل لكي لا يستهلك الدقائق المجانية بسرعة (مثلاً 6 ساعات)
+    timeout-minutes: 360 
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 🚀 Start Bot (Live Mode)
+      env:
+        # هنا نربط البوت ببياناتك الحقيقية لكي يعمل
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        MONGO_URL: ${{ secrets.MONGO_URL }}
+      run: |
+        echo "البوت يبدأ العمل الآن... ستتحول العلامة للون البرتقالي/الأصفر"
+        python main.py
