@@ -3,7 +3,7 @@ name: Telegram Bot Live Execution
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # يتيح لك تشغيل البوت يدوياً من واجهة جيت هاب
+  workflow_dispatch: # يتيح لك تشغيل البوت يدوياً من واجتهة جيت هاب
 
 jobs:
   run-bot:
